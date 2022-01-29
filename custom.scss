@@ -5,3 +5,21 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.g2048 {
+    height: 400px;
+    width: 400px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 5px;
+    .square {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        border-radius: 3px;
+        background-color: rgb(59, 59, 59);
+        color: white;
+    }
+}

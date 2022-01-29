@@ -6,4 +6,22 @@
   box-sizing: border-box;
 }
 
+.g2048 {
+  height: 400px;
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 5px;
+}
+.g2048 .square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  border-radius: 3px;
+  background-color: #3b3b3b;
+  color: white;
+}
+
 /*# sourceMappingURL=style.css.map */
