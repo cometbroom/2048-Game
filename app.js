@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         generate();
         generate();
-        moveRight();
+        moveLeft();
     }
     createBoard();
 
@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         for (let i = 0; i < rows.length; ++i) {
             let filteredRow = rows[i].filter((num) => num);
-            console.log(filteredRow);
             let missing = 4 - filteredRow.length;
             let zeros = Array(missing).fill(0);
             let newRow = zeros.concat(filteredRow);
@@ -67,5 +66,69 @@ document.addEventListener("DOMContentLoaded", () => {
             squares[pos + 2].innerHTML = newRow[2];
             squares[pos + 3].innerHTML = newRow[3];
         }
+    }
+    function moveLeft() {
+        let rows = getRows();
+
+        for (let i = 0; i < rows.length; ++i) {
+            let filteredRow = rows[i].filter((num) => num);
+            let missing = 4 - filteredRow.length;
+            let zeros = Array(missing).fill(0);
+            let newRow = filteredRow.concat(zeros);
+
+            let pos = i * 4;
+            squares[pos].innerHTML = newRow[0];
+            squares[pos + 1].innerHTML = newRow[1];
+            squares[pos + 2].innerHTML = newRow[2];
+            squares[pos + 3].innerHTML = newRow[3];
+        }
+    }
+    function combineRow() {
+        for (let i = 0; i < 15; ++i) {
+            let [leftSquare, rightSquare] = [
+                squares[i].innerHTML,
+                squares[i + 1].innerHTML,
+            ];
+            if (leftSquare === rightSquare) {
+                let combinedTotal =
+                    parseInt(leftSquare) + parseInt(rightSquare);
+                squares[i].innerHTML = combinedTotal;
+                squares[i + 1].innerHTML = 0;
+            }
+        }
+    }
+
+    //assign keys
+    function contorl(e) {
+        switch (e.keyCode) {
+            case 37:
+                keyLeft();
+                break;
+            case 38:
+                keyUp();
+                break;
+            case 39:
+                keyRight();
+                break;
+            case 40:
+                keyDown();
+                break;
+            default:
+                break;
+        }
+    }
+    document.addEventListener("keyup", contorl);
+
+    function keyRight() {
+        moveRight();
+        combineRow();
+        moveRight();
+        generate();
+    }
+    function keyLeft() {
+        moveLeft();
+        combineRow();
+        moveLeft();
+        generate();
     }
 });
