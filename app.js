@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const resultDisplay = document.querySelector("#result");
     const width = 4;
     let squares = [];
+    let score = 0;
 
     //Create a playing board
     function createBoard() {
@@ -25,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         randomNumber = Math.floor(Math.random() * squares.length);
         if (squares[randomNumber].innerHTML == 0) {
             squares[randomNumber].innerHTML = 2;
+            loseCondition();
         } else generate();
     }
 
@@ -148,6 +150,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    //Combine functions
+
+    //combine the rows
     function combineRow() {
         for (let i = 0; i < 15; ++i) {
             if (squares[i].innerHTML === squares[i + 1].innerHTML) {
@@ -156,9 +161,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     parseInt(squares[i + 1].innerHTML);
                 updateTile(i, combinedTotal);
                 updateTile(i + 1, 0);
+                score += combinedTotal;
+                scoreDisplay.innerHTML = score;
             }
         }
+        winCondition();
     }
+    //combine the columns
     function combineColumn() {
         for (let i = 0; i < 12; ++i) {
             if (squares[i].innerHTML === squares[i + width].innerHTML) {
@@ -167,12 +176,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     parseInt(squares[i + width].innerHTML);
                 updateTile(i, combinedTotal);
                 updateTile(i + width, 0);
+                score += combinedTotal;
+                scoreDisplay.innerHTML = score;
             }
         }
+        winCondition();
     }
 
     //assign keys
-    function contorl(e) {
+    function control(e) {
         switch (e.keyCode) {
             case 37:
                 keyLeft();
@@ -193,10 +205,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Logic
     //check for the number 2048
-
+    function winCondition() {
+        for (let i = 0; i < squares.length; ++i) {
+            if (squares[i].innerHTML == 2048) {
+                resultDisplay.innerHTML = "You Win!";
+                document.removeEventListener("keyup", control);
+            }
+        }
+    }
+    //check for game over
+    function loseCondition() {
+        let inners = squares.map((x) => x.innerHTML);
+        if (inners.includes("0") === false) {
+            resultDisplay.innerHTML = "You Lose!";
+            document.removeEventListener("keyup", control);
+        }
+    }
 
     //Events
-    document.addEventListener("keyup", contorl);
+    document.addEventListener("keyup", control);
 
     function keyRight() {
         moveRight();
