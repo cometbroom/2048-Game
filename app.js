@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const gridDisplay = document.querySelector(".g2048");
     const scoreDisplay = document.querySelector("#score");
-    const resultDisplay = document.querySelector("#result");
+    const resultDisplay = document.querySelector(".message");
     const width = 4;
     let squares = [];
     let score = 0;
@@ -11,21 +11,39 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < width * width; i++) {
             let square = document.createElement("div");
             square.classList.add("square");
+            let j = i + 1;
+            let colStart = (i % 4) + 1;
+            let colEnd = (i % 4) + 2;
+            let rowStart = Math.ceil((i + 1) / 4);
+            let rowEnd = Math.ceil((i + 1) / 4) + 1;
+            square.style.gridArea = `${rowStart}/${colStart}/${rowEnd}/${colEnd}`;
             square.innerHTML = 0;
+
             gridDisplay.appendChild(square);
             squares.push(square);
         }
         generate();
         generate();
-        moveLeft();
     }
     createBoard();
+
+    function hideZeros() {
+        for (let i = 0; i < 16; ++i) {
+            let valueInner = parseInt(squares[i].innerHTML);
+            if (valueInner === 0) {
+                squares[i].style.color = "white";
+            } else if (valueInner > 0) {
+                squares[i].style.color = "black";
+            }
+        }
+    }
 
     //generate a number randomly
     function generate() {
         randomNumber = Math.floor(Math.random() * squares.length);
         if (squares[randomNumber].innerHTML == 0) {
             squares[randomNumber].innerHTML = 2;
+            hideZeros();
             loseCondition();
         } else generate();
     }
@@ -209,6 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < squares.length; ++i) {
             if (squares[i].innerHTML == 2048) {
                 resultDisplay.innerHTML = "You Win!";
+                resultDisplay.style.display = "flex";
                 document.removeEventListener("keyup", control);
             }
         }
@@ -218,6 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let inners = squares.map((x) => x.innerHTML);
         if (inners.includes("0") === false) {
             resultDisplay.innerHTML = "You Lose!";
+            resultDisplay.style.display = "flex";
             document.removeEventListener("keyup", control);
         }
     }

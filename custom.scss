@@ -6,20 +6,112 @@
     box-sizing: border-box;
 }
 
+@mixin place-element($position, $positioning: absolute) {
+    ///Places an element using position:absolute by default
+    ///
+    ///@param {string} $position
+    ///The position of the element according to browser dimensions. Use "left" or "right" to start from parent's starting positon
+    ///@param {string} $positioning
+    ///The position attribute of the element. It is absolute by default.
+    position: $positioning;
+
+    @if $position == "top" {
+        left: 50%;
+        top: 0%;
+        transform: translateX(-50%);
+    }
+    @if $position == "top-left" {
+        top: 0%;
+        left: 0%;
+    }
+    @if $position == "left" {
+        left: 0%;
+    }
+    @if $position == "top-right" {
+        left: 100%;
+        top: 0%;
+        transform: translateX(-100%);
+    }
+    @if $position == "right" {
+        left: 100%;
+        transform: translateX(-100%);
+    }
+    @if $position == "bottom" {
+        left: 50%;
+        top: 100%;
+        transform: translate(-50%, -100%);
+    }
+    @if $position == "bottom-left" {
+        left: 0;
+        top: 100%;
+        transform: translateY(-100%);
+    }
+    @if $position == "bottom-right" {
+        left: 100%;
+        top: 100%;
+        transform: translate(-100%, -100%);
+    }
+    @if $position == "center" {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    @if $position == "center-left" {
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    @if $position == "center-right" {
+        left: 100%;
+        top: 50%;
+        transform: translate(-100%, -50%);
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: monospace;
+}
+
+.score-container {
+    display: flex;
+    gap: 20px;
+    font-size: 2em;
+}
+
 .g2048 {
     height: 400px;
     width: 400px;
+    padding: 20px;
+    margin: 10px 0px;
+    border: 1px solid black;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
-    gap: 5px;
+    gap: 10px;
+    background-color: rgb(253, 249, 0);
     .square {
         display: flex;
         justify-content: center;
         align-items: center;
         font-size: 2em;
         border-radius: 3px;
-        background-color: rgb(59, 59, 59);
-        color: white;
+        border: 1px solid rgb(59, 59, 59);
+        background-color: white;
+        color: rgb(68, 68, 68);
+        box-shadow: 1px 1px 5px gray;
+    }
+    div.message {
+        grid-area: 2/1/4/5;
+        z-index: 2;
+        background-color: white;
+        border: 3px solid rgb(58, 58, 58);
+        border-radius: 3px;
+        margin: 0px 20px;
+        display: none;
+        justify-content: center;
+        align-items: center;
     }
 }
