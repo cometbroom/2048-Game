@@ -289,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let pos = i * 4;
             if (shouldAnimate === true) {
-                updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow, "right");
+                updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow, "left");
             } else {
                 updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow, "");
             }
@@ -438,6 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.removeEventListener("keyup", control);
         }
     }
+    //see if we can combine
 
     //Key event handling
     /*

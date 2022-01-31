@@ -15,15 +15,18 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: monospace;
+  background-color: #393938;
 }
 
 .score-container {
   display: flex;
   gap: 20px;
   font-size: 2em;
+  color: white;
 }
 
 .g2048 {
+  box-shadow: 2px 2px 5px gray;
   height: 400px;
   width: 400px;
   padding: 20px;
@@ -33,7 +36,7 @@ body {
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
-  background-color: #fdf900;
+  background-color: white;
 }
 .g2048 .square {
   display: flex;
@@ -69,23 +72,23 @@ body {
 
 @keyframes moveup {
   from {
-    padding-top: 1.5em;
-  }
-  to {
-    padding-top: 0;
-  }
-}
-@keyframes movedown {
-  from {
     padding-bottom: 1.5em;
   }
   to {
     padding-bottom: 0;
   }
 }
+@keyframes movedown {
+  from {
+    padding-top: 1.5em;
+  }
+  to {
+    padding-top: 0;
+  }
+}
 @keyframes moveright {
   from {
-    padding-left: 2em;
+    padding-left: 1.5em;
   }
   to {
     padding-left: 0;
@@ -93,7 +96,7 @@ body {
 }
 @keyframes moveleft {
   from {
-    padding-right: 2em;
+    padding-right: 1.5em;
   }
   to {
     padding-right: 0;
