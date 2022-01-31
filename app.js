@@ -112,7 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
         //Generate a random number from 0 to 16 non-inclusive.
         randomNumber = Math.floor(Math.random() * squares.length);
         if (squares[randomNumber].innerHTML == 0) {
-            squares[randomNumber].innerHTML = 2;
+            let options = [2, 4];
+            let randomIndex = Math.round(Math.random());
+            squares[randomNumber].innerHTML = options[randomIndex];
             hideZeros();
             //Check if player lost
             loseCondition();
