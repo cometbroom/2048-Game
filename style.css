@@ -8,6 +8,7 @@
 
 :root {
   --text-color: rgb(53, 53, 53);
+  --background-sq-size: 3.5em;
 }
 
 body {
@@ -15,18 +16,39 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: monospace;
-  background-color: #393938;
 }
 
-.score-container {
+.background-pattern {
+  background-color: #e5e5f7;
+  opacity: 1;
+  background-image: linear-gradient(#3a3a3a 1px, transparent 1px), linear-gradient(to right, #121213 1px, #e4e4e4 1px);
+  animation: backgroundStart 0.5s ease 0s 1 forwards;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: -1;
+  filter: blur(1px);
+}
+
+section.game {
+  display: flex;
+  flex-direction: column;
+}
+section.game .score-container {
   display: flex;
   gap: 20px;
   font-size: 2em;
-  color: white;
+  justify-content: space-between;
+  padding: 10px 20px;
+  color: #141414;
+  text-shadow: 1px 1px 2px gray;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
 }
-
-.g2048 {
+section.game .g2048 {
   box-shadow: 2px 2px 5px gray;
+  border-radius: 3px;
   height: 400px;
   width: 400px;
   padding: 20px;
@@ -38,7 +60,7 @@ body {
   gap: 10px;
   background-color: white;
 }
-.g2048 .square {
+section.game .g2048 .square {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -50,7 +72,7 @@ body {
   color: #444444;
   box-shadow: 1px 1px 5px gray;
 }
-.g2048 div.message {
+section.game .g2048 div.message {
   grid-area: 2/1/4/5;
   z-index: 2;
   background-color: white;
@@ -100,6 +122,14 @@ body {
   }
   to {
     padding-right: 0;
+  }
+}
+@keyframes backgroundStart {
+  from {
+    background-size: 10px 10px;
+  }
+  to {
+    background-size: var(--background-sq-size) var(--background-sq-size);
   }
 }
 
