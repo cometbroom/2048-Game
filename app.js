@@ -1,5 +1,7 @@
 //Prototype method additions
-
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
 //Taken from https://stackoverflow.com/questions/7837456/how-to-compare-arrays-in-javascript
 // Warn if overriding existing method
 if (Array.prototype.equals)
@@ -120,11 +122,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //Update square with indexes (indexold) with a new column/row.
-    function updateTiles(indexOld, tilesNew) {
+    function updateTiles(indexOld, tilesNew, direction) {
         squares[indexOld[0]].innerHTML = tilesNew[0];
         squares[indexOld[1]].innerHTML = tilesNew[1];
         squares[indexOld[2]].innerHTML = tilesNew[2];
         squares[indexOld[3]].innerHTML = tilesNew[3];
+        animateTiles(indexOld, direction);
+    }
+    async function animateTiles(indexOld, direction) {
+        if (direction === "") {
+            return;
+        }
+        let selectArray = [];
+        switch (direction) {
+            case "up":
+                selectArray = [1, 2, 3];
+                break;
+            case "down":
+                selectArray = [0, 1, 2];
+                break;
+            case "left":
+                selectArray = [1, 2, 3];
+                break;
+            case "right":
+                selectArray = [0, 1, 2];
+                break;
+        }
+        squares[
+            indexOld[selectArray[0]]
+        ].style.animation = `move${direction} 0.2s forwards`;
+        squares[
+            indexOld[selectArray[1]]
+        ].style.animation = `move${direction} 0.2s forwards`;
+        squares[
+            indexOld[selectArray[2]]
+        ].style.animation = `move${direction} 0.2s forwards`;
+        await sleep(200).then(() => {
+            squares[indexOld[selectArray[0]]].style.animation = "none";
+            squares[indexOld[selectArray[1]]].style.animation = "none";
+            squares[indexOld[selectArray[2]]].style.animation = "none";
+        });
     }
     //Update only one tile.
     function updateTile(indexOld, tileNew) {
@@ -207,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     */
     //swipe right
-    function moveRight() {
+    function moveRight(shouldAnimate = false) {
         //Get our rows (They are 4)
         let rows = getRows();
         let isMoved = false;
@@ -230,11 +267,15 @@ document.addEventListener("DOMContentLoaded", () => {
             //Times 4 to help i also represent first square of rows accordingly as pos.
             let pos = i * 4;
             //take the first and the rest of the row squares with arithmetic and add the newrow to them.
-            updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow);
+            if (shouldAnimate === true) {
+                updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow, "right");
+            } else {
+                updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow, "");
+            }
         }
         return isMoved;
     }
-    function moveLeft() {
+    function moveLeft(shouldAnimate = false) {
         let rows = getRows();
         let isMoved = false;
 
@@ -247,12 +288,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             let pos = i * 4;
-            updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow);
+            if (shouldAnimate === true) {
+                updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow, "right");
+            } else {
+                updateTiles([pos, pos + 1, pos + 2, pos + 3], newRow, "");
+            }
         }
         return isMoved;
     }
     //almost the same but get columns instead
-    function moveDown() {
+    function moveDown(shouldAnimate = false) {
         let cols = getCols();
         let isMoved = false;
 
@@ -264,14 +309,19 @@ document.addEventListener("DOMContentLoaded", () => {
             if (newColumn.equals(cols[i]) === false) {
                 isMoved = true;
             }
+            let directionAnim = "";
+            if (shouldAnimate === true) {
+                directionAnim = "down";
+            }
             updateTiles(
                 [i, i + width, i + width * 2, i + width * 3],
-                newColumn
+                newColumn,
+                directionAnim
             );
         }
         return isMoved;
     }
-    function moveUp() {
+    function moveUp(shouldAnimate = false) {
         let cols = getCols();
         let isMoved = false;
 
@@ -282,9 +332,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (newColumn.equals(cols[i]) === false) {
                 isMoved = true;
             }
+            let directionAnim = "";
+            if (shouldAnimate === true) {
+                directionAnim = "up";
+            }
             updateTiles(
                 [i, i + width, i + width * 2, i + width * 3],
-                newColumn
+                newColumn,
+                directionAnim
             );
         }
         return isMoved;
@@ -419,9 +474,8 @@ document.addEventListener("DOMContentLoaded", () => {
         //Move right first to get alike number next to one another
         //Combine alike numbers
         let [isMoved, isCombined] = [moveRight(), combineRow()];
-        console.log(isMoved, isCombined);
         //Set them in the correct spot
-        moveRight();
+        moveRight(true);
         // generate one new number.
         // IF our array is moved on first move function
         if (isMoved === true || isCombined === true) {
@@ -430,21 +484,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     function keyLeft() {
         let [isMoved, isCombined] = [moveLeft(), combineRow()];
-        moveLeft();
+        moveLeft(true);
         if (isMoved === true || isCombined === true) {
             generate();
         }
     }
     function keyUp() {
         let [isMoved, isCombined] = [moveUp(), combineColumn()];
-        moveUp();
+        moveUp(true);
         if (isMoved === true || isCombined === true) {
             generate();
         }
     }
     function keyDown() {
         let [isMoved, isCombined] = [moveDown(), combineColumn()];
-        moveDown();
+        moveDown(true);
         if (isMoved === true || isCombined === true) {
             generate();
         }

@@ -67,4 +67,37 @@ body {
   transition-duration: 0.5s;
 }
 
+@keyframes moveup {
+  from {
+    padding-top: 1.5em;
+  }
+  to {
+    padding-top: 0;
+  }
+}
+@keyframes movedown {
+  from {
+    padding-bottom: 1.5em;
+  }
+  to {
+    padding-bottom: 0;
+  }
+}
+@keyframes moveright {
+  from {
+    padding-left: 2em;
+  }
+  to {
+    padding-left: 0;
+  }
+}
+@keyframes moveleft {
+  from {
+    padding-right: 2em;
+  }
+  to {
+    padding-right: 0;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */
