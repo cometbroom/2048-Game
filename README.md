@@ -4,13 +4,13 @@
 
 2048 is game where you combine numbered tiles to get higher number tiles.
 
-## Rules of game:
+## Rules:
 
 -   Combine blocks using the 4 direction arrows on your keyboard \(up, right, down, left).
 -   Adjacent blocks with the same number get added up while moving
 -   On every move a new block with either the number 2 or 4 is added
 -   If the blocks are all filled and there are no adjacent blocks that can be combined, the game will be lost.
--           Objective is to get a block with the number 2048
+-   Objective is to get a block with the number 2048
 
 [Read more...](https://levelskip.com/puzzle/How-to-play-2048#:~:text=The%20rules%20are%20also%20simple,numbers%20written%20on%20them%20initially.)
 
