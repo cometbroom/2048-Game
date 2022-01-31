@@ -39,8 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const gridDisplay = document.querySelector(".g2048");
     const scoreDisplay = document.querySelector("#score");
     const resultDisplay = document.querySelector(".message");
-    const docStyle = getComputedStyle(document.documentElement);
-    let textColorVar = docStyle.getPropertyValue("--text-color");
     const width = 4;
     let squares = [];
     let score = 0;
@@ -412,15 +410,18 @@ document.addEventListener("DOMContentLoaded", () => {
     /*
 
     */
+    function messageBoxAppear(msg) {
+        resultDisplay.innerHTML = msg;
+        resultDisplay.style.opacity = "0.8";
+        resultDisplay.style.width = "80%";
+        resultDisplay.style.height = "80%";
+    }
     //check for the number 2048
     function winCondition(combinedArray) {
         //Check all squares that we combined.
         for (let i = 0; i < combinedArray.length; ++i) {
             if (combinedArray[i] === 2048) {
-                resultDisplay.innerHTML = "You Win!";
-                resultDisplay.style.opacity = "0.8";
-                resultDisplay.style.width = "80%";
-                resultDisplay.style.height = "80%";
+                messageBoxAppear("You WIN!");
                 document.removeEventListener("keyup", control);
             }
         }
@@ -430,15 +431,37 @@ document.addEventListener("DOMContentLoaded", () => {
         //Create array of innerhtml's in squares
         let inners = squares.map((x) => x.innerHTML);
         //Check if all of those inners don't have 0.
-        if (inners.includes("0") === false) {
-            resultDisplay.innerHTML = "You Lose!";
-            //Display our message block.
-            resultDisplay.style.display = "flex";
+        if (inners.includes("0") === false && canCombine() === false) {
+            messageBoxAppear("You LOSE!");
             //take away event listener to stop playing the game.
             document.removeEventListener("keyup", control);
         }
     }
+    //check for duplicate by filtering adjacent duplicated and
+    //cross-checking with length.
+    function checkIfDuplicateExists(arr) {
+        let result = arr.filter((i, idx) => arr[idx - 1] !== i);
+        return result.length !== arr.length;
+    }
     //see if we can combine
+    function canCombine() {
+        let rows = getRows();
+        let cols = getCols();
+        let canCombine = false;
+
+        //if any of the rows has duplicates can combine becomes true
+        for (let i = 0; i < rows.length; ++i) {
+            if (checkIfDuplicateExists(rows[i])) {
+                canCombine = true;
+            }
+        }
+        for (let j = 0; j < cols.length; ++j) {
+            if (checkIfDuplicateExists(cols[j])) {
+                canCombine = true;
+            }
+        }
+        return canCombine;
+    }
 
     //Key event handling
     /*
