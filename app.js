@@ -29,6 +29,10 @@ Array.prototype.equals = function (array) {
 // Hide method from for-in loops
 Object.defineProperty(Array.prototype, "equals", { enumerable: false });
 
+/*
+
+*/
+//Add method to load event
 document.addEventListener("DOMContentLoaded", () => {
     const gridDisplay = document.querySelector(".g2048");
     const scoreDisplay = document.querySelector("#score");
@@ -63,6 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     createBoard();
 
+    //Tool functions
+    /*
+
+    */
     //Function to hide the zeros in our board and unhide the new numbers.
     //called in our generete()
     function hideZeros() {
@@ -121,6 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
+    //Row and column parser
+    /*
+
+    */
     //get the rows by having the expression on the first tile only.
     function getRows() {
         //Rows array to push every one of 4 rows to.
@@ -149,7 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         return rows;
     }
-
     //Same as getRows() but here we only take the first row and get the rest of column with width.
     function getCols() {
         let cols = [];
@@ -170,6 +181,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return cols;
     }
 
+    //Move functions
+    /*
+
+    */
     //swipe right
     function moveRight() {
         //Get our rows (They are 4)
@@ -255,7 +270,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //Combine functions
+    /*
 
+    */
     //combine the rows
     function combineRow() {
         //Make an array of all the combined values to check for win condition
@@ -315,33 +332,15 @@ document.addEventListener("DOMContentLoaded", () => {
         return isCombined;
     }
 
-    //assign keys
-    function control(e) {
-        //Key codes found through key code info.
-        switch (e.keyCode) {
-            case 37:
-                keyLeft();
-                break;
-            case 38:
-                keyUp();
-                break;
-            case 39:
-                keyRight();
-                break;
-            case 40:
-                keyDown();
-                break;
-            default:
-                break;
-        }
-    }
+    //Win Logic
+    /*
 
-    //Logic
+    */
     //check for the number 2048
     function winCondition(combinedArray) {
         //Check all squares that we combined.
         for (let i = 0; i < combinedArray.length; ++i) {
-            if (combinedArray[i] === 8) {
+            if (combinedArray[i] === 2048) {
                 resultDisplay.innerHTML = "You Win!";
                 resultDisplay.style.opacity = "0.8";
                 resultDisplay.style.width = "80%";
@@ -364,10 +363,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    //Events
+    //Key event handling
+    /*
+
+    */
+    //assign keys
+    function control(e) {
+        //Key codes found through key code info.
+        switch (e.keyCode) {
+            case 37:
+                keyLeft();
+                break;
+            case 38:
+                keyUp();
+                break;
+            case 39:
+                keyRight();
+                break;
+            case 40:
+                keyDown();
+                break;
+            default:
+                break;
+        }
+    }
     //Add keyup event listener linked to control method.
     document.addEventListener("keyup", control);
 
+    //Key functions
+    /*
+
+    */
     function keyRight() {
         //Move right first to get alike number next to one another
         //Combine alike numbers

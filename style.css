@@ -62,8 +62,8 @@ body {
   width: 0%;
   height: 0%;
   transition: opacity, width, height;
-  transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.53);
-  transition-duration: 0.6s;
+  transition-timing-function: cubic-bezier(0.64, 0.57, 0.67, 1.33);
+  transition-duration: 0.5s;
 }
 
 /*# sourceMappingURL=style.css.map */
