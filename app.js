@@ -266,7 +266,9 @@ document.addEventListener("DOMContentLoaded", () => {
             //Only combine if the squares are equal
             if (squares[i].innerHTML === squares[i + 1].innerHTML) {
                 //when if evaluates, that means we have combined a value
-                isCombined = true;
+                if (squares[i].innerHTML != 0) {
+                    isCombined = true;
+                }
                 //Get a variable representing combined value of our 2 identical squares
                 let combinedTotal =
                     parseInt(squares[i].innerHTML) +
@@ -296,7 +298,9 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < 12; ++i) {
             //For the rest it is the same as combine row.
             if (squares[i].innerHTML === squares[i + width].innerHTML) {
-                isCombined = true;
+                if (squares[i].innerHTML != 0) {
+                    isCombined = true;
+                }
                 let combinedTotal =
                     parseInt(squares[i].innerHTML) +
                     parseInt(squares[i + width].innerHTML);
@@ -368,6 +372,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //Move right first to get alike number next to one another
         //Combine alike numbers
         let [isMoved, isCombined] = [moveRight(), combineRow()];
+        console.log(isMoved, isCombined);
         //Set them in the correct spot
         moveRight();
         // generate one new number.
