@@ -1,5 +1,7 @@
 # 2048
 
+[Play the game](https://cometbroom.github.io/2048-Game/src)
+
 ## Introduction
 
 2048 is game where you combine numbered tiles to get higher number tiles.
