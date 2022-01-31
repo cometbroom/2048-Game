@@ -30,3 +30,4 @@ The features to be implemented are below:
 2. Replay functionality
 3. Undo functionality
 4. History of top scores on local storage or as a cookie
+5. Special blocks and etc...
