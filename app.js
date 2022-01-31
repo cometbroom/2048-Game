@@ -79,11 +79,32 @@ document.addEventListener("DOMContentLoaded", () => {
             let valueInner = parseInt(squares[i].innerHTML);
             if (valueInner === 0) {
                 squares[i].style.color = "white";
+                squares[i].style.backgroundColor = "white";
             } else if (valueInner > 0) {
                 //If number set to black.
-                squares[i].style.color = textColorVar;
+                let colors = setColor(valueInner);
+                squares[i].style.color = colors.txt;
+                squares[i].style.backgroundColor = colors.bg;
             }
         }
+    }
+    //set color of square according to number
+    function setColor(value) {
+        let colorBg = "";
+        let textColor = "black";
+        // from 29 to 4
+        let hue = 35;
+        let saturation = 100;
+        //4/4 4/8 * hue
+        if (value === 2) {
+            colorBg = "white";
+        } else if (value > 2) {
+            colorBg = `hsl(${
+                hue - Math.ceil(Math.log(value) * 3)
+            }, ${saturation}%, 52%)`;
+            textColor = "white";
+        }
+        return { bg: colorBg, txt: textColor };
     }
 
     //generate a number randomly
