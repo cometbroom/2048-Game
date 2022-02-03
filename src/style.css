@@ -141,5 +141,16 @@ section.game .g2048 div.message {
     opacity: 1;
   }
 }
+@media screen and (max-width: 900px) {
+  section.game {
+    padding-top: 0;
+    height: 100vh;
+    justify-content: center;
+  }
+  section.game .g2048 {
+    width: 340px;
+    height: 340px;
+  }
+}
 
 /*# sourceMappingURL=style.css.map */

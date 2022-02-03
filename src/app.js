@@ -540,8 +540,67 @@ document.addEventListener("DOMContentLoaded", () => {
                 break;
         }
     }
+
+    //Touch functionality
+    /*
+     */
+    //Register our x and y location
+    let xDown = null;
+    let yDown = null;
+
+    function getTouches(e) {
+        return e.touches;
+    }
+    //Called when touch is started
+    function handleTouchStart(e) {
+        //register touch begin in the earlier declared variables
+        const touchBegin = getTouches(e)[0];
+        xDown = touchBegin.clientX;
+        yDown = touchBegin.clientY;
+    }
+
+    function handleTouchMove(e) {
+        //If any of the touches are null, return, fail safe.
+        if (!xDown || !yDown) {
+            return;
+        }
+        //register location after move
+        let xUp = e.touches[0].clientX;
+        let yUp = e.touches[0].clientY;
+
+        //Take out the difference of the locations
+        let xDiff = xDown - xUp;
+        let yDiff = yDown - yUp;
+
+        //Determine with negatives the difference in x or y
+        //to determine horizontal or vertical direction
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            //After determining horizontal, positive x is left
+            if (xDiff > 0) {
+                keyLeft();
+            } else {
+                //negative x is right
+                keyRight();
+            }
+        } else {
+            //after determining vertical
+            //positive y is up
+            if (yDiff > 0) {
+                keyUp();
+            } else {
+                //negative y is down.
+                keyDown();
+            }
+        }
+        //reset to be able to register changes correctly again.
+        xDown = null;
+        yDown = null;
+    }
     //Add keyup event listener linked to control method.
     document.addEventListener("keyup", control);
+    //Connect our events to the functions while making sure bubble propagation.
+    document.addEventListener("touchstart", handleTouchStart, false);
+    document.addEventListener("touchmove", handleTouchMove, false);
 
     //Key functions
     /*

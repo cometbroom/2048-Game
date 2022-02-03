@@ -204,3 +204,15 @@ section.game {
         opacity: 1;
     }
 }
+
+@media screen and (max-width: "900px") {
+    section.game {
+        padding-top: 0;
+        height: 100vh;
+        justify-content: center;
+        .g2048 {
+            width: 340px;
+            height: 340px;
+        }
+    }
+}
