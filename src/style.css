@@ -144,7 +144,8 @@ section.game .g2048 div.message {
 @media screen and (max-width: 900px) {
   section.game {
     padding-top: 0;
-    height: 100vh;
+    height: 100%;
+    overflow: hidden;
     justify-content: center;
   }
   section.game .g2048 {
