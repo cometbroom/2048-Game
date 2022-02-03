@@ -96,6 +96,7 @@ body {
 section.game {
     display: flex;
     flex-direction: column;
+    padding-top: 2.5rem;
     .score-container {
         display: flex;
         gap: 20px;
@@ -193,5 +194,13 @@ section.game {
     }
     to {
         background-size: var(--background-sq-size) var(--background-sq-size);
+    }
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

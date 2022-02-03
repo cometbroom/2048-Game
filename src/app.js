@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const gridDisplay = document.querySelector(".g2048");
     const scoreDisplay = document.querySelector("#score");
     const resultDisplay = document.querySelector(".message");
+    let animations = {
+        fadein: "fadeIn 0.3s forwards",
+    };
     const width = 4;
     let squares = [];
     let score = 0;
@@ -114,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (squares[randomNumber].innerHTML == 0) {
             let options = [2, 4];
             let randomIndex = Math.round(Math.random());
+            squares[randomNumber].style.animation = animations.fadein;
             squares[randomNumber].innerHTML = options[randomIndex];
             hideZeros();
             //Check if player lost

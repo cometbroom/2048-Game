@@ -33,6 +33,7 @@ body {
 section.game {
   display: flex;
   flex-direction: column;
+  padding-top: 2.5rem;
 }
 section.game .score-container {
   display: flex;
@@ -130,6 +131,14 @@ section.game .g2048 div.message {
   }
   to {
     background-size: var(--background-sq-size) var(--background-sq-size);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
