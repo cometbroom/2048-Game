@@ -31,6 +31,13 @@ Array.prototype.equals = function (array) {
 // Hide method from for-in loops
 Object.defineProperty(Array.prototype, "equals", { enumerable: false });
 
+let sounds = {
+    combined: new Audio("../assets/sounds/Game_Notification_82.wav"),
+    snap: new Audio("../assets/sounds/Game_Notification_81.wav"),
+    blocked: new Audio("../assets/sounds/Game_Ball_Bounce.wav"),
+    combinedPitch: (x) => {},
+};
+
 /*
 
 */
@@ -108,6 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
             textColor = "white";
         }
         return { bg: colorBg, txt: textColor };
+    }
+
+    function insert(num) {
+        squares[0].innerHTML = num;
     }
 
     //generate a number randomly
@@ -266,6 +277,9 @@ document.addEventListener("DOMContentLoaded", () => {
             */
             if (newRow.equals(rows[i]) === false) {
                 isMoved = true;
+                if (canCombineDirection("row") === false) {
+                    sounds.snap.play();
+                }
             }
 
             //Times 4 to help i also represent first square of rows accordingly as pos.
@@ -289,6 +303,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let newRow = fandz.filtered.concat(fandz.zeros);
             if (newRow.equals(rows[i]) === false) {
                 isMoved = true;
+                if (canCombineDirection("row") === false) {
+                    sounds.snap.play();
+                }
             }
 
             let pos = i * 4;
@@ -312,6 +329,9 @@ document.addEventListener("DOMContentLoaded", () => {
             //same as side moves but use width to update the rest of columns instead.
             if (newColumn.equals(cols[i]) === false) {
                 isMoved = true;
+                if (canCombineDirection("column") === false) {
+                    sounds.snap.play();
+                }
             }
             let directionAnim = "";
             if (shouldAnimate === true) {
@@ -335,6 +355,9 @@ document.addEventListener("DOMContentLoaded", () => {
             let newColumn = fAndZ.filtered.concat(fAndZ.zeros);
             if (newColumn.equals(cols[i]) === false) {
                 isMoved = true;
+                if (canCombineDirection("column") === false) {
+                    sounds.snap.play();
+                }
             }
             let directionAnim = "";
             if (shouldAnimate === true) {
@@ -365,6 +388,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 //when if evaluates, that means we have combined a value
                 if (squares[i].innerHTML != 0) {
                     isCombined = true;
+                    sounds.combined.play();
                 }
                 //Get a variable representing combined value of our 2 identical squares
                 let combinedTotal =
@@ -395,12 +419,13 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < 12; ++i) {
             //For the rest it is the same as combine row.
             if (squares[i].innerHTML === squares[i + width].innerHTML) {
-                if (squares[i].innerHTML != 0) {
-                    isCombined = true;
-                }
                 let combinedTotal =
                     parseInt(squares[i].innerHTML) +
                     parseInt(squares[i + width].innerHTML);
+                if (squares[i].innerHTML != 0) {
+                    isCombined = true;
+                    sounds.combined.play();
+                }
                 updateTile(i, combinedTotal);
                 combinedSquares.push(combinedTotal);
                 updateTile(i + width, 0);
@@ -449,6 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let result = arr.filter((i, idx) => arr[idx - 1] !== i);
         return result.length !== arr.length;
     }
+
     //see if we can combine
     function canCombine() {
         let rows = getRows();
@@ -463,6 +489,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         for (let j = 0; j < cols.length; ++j) {
             if (checkIfDuplicateExists(cols[j])) {
+                canCombine = true;
+            }
+        }
+        return canCombine;
+    }
+    function canCombineDirection(direction) {
+        let array;
+        switch (direction) {
+            case "row":
+                array = getRows();
+                break;
+            case "column":
+                array = getCols();
+                break;
+        }
+        let canCombine = false;
+        //if any of the rows has duplicates can combine becomes true
+        for (let i = 0; i < array.length; ++i) {
+            let arrayp = array[i].filter((x) => x !== 0);
+
+            if (checkIfDuplicateExists(arrayp)) {
                 canCombine = true;
             }
         }
@@ -510,6 +557,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // IF our array is moved on first move function
         if (isMoved === true || isCombined === true) {
             generate();
+        } else {
+            sounds.blocked.play();
         }
     }
     function keyLeft() {
@@ -517,6 +566,8 @@ document.addEventListener("DOMContentLoaded", () => {
         moveLeft(true);
         if (isMoved === true || isCombined === true) {
             generate();
+        } else {
+            sounds.blocked.play();
         }
     }
     function keyUp() {
@@ -524,6 +575,8 @@ document.addEventListener("DOMContentLoaded", () => {
         moveUp(true);
         if (isMoved === true || isCombined === true) {
             generate();
+        } else {
+            sounds.blocked.play();
         }
     }
     function keyDown() {
@@ -531,6 +584,8 @@ document.addEventListener("DOMContentLoaded", () => {
         moveDown(true);
         if (isMoved === true || isCombined === true) {
             generate();
+        } else {
+            sounds.blocked.play();
         }
     }
 });
