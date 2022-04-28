@@ -3,3 +3,4 @@ dist/
 .eslintrc
 .vscode/
 notes
+node_modules/
