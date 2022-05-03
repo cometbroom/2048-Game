@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "sass --watch ./src/custom.scss ./src/style.css"
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/cometbroom/2048-Game/issues"
   },
-  "homepage": "https://github.com/cometbroom/2048-Game#readme"
+  "homepage": "https://github.com/cometbroom/2048-Game#readme",
+  "devDependencies": {
+    "prettier": "2.6.2"
+  }
 }
