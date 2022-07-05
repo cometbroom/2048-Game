@@ -6,7 +6,7 @@
 
 2048 is game where you combine numbered tiles to get higher number tiles.
 
-## Rules:
+## Rules
 
 -   Combine blocks using the 4 direction arrows on your keyboard \(up, right, down, left).
 -   Adjacent blocks with the same number get added up while moving
@@ -15,6 +15,25 @@
 -   Objective is to get a block with the number 2048
 
 [Read more...](https://levelskip.com/puzzle/How-to-play-2048#:~:text=The%20rules%20are%20also%20simple,numbers%20written%20on%20them%20initially.)
+
+## Folder Structure
+```
+.
+├── assets/
+│   └── ...Application assets and sounds
+├── readme-assets/
+│   └── ...Github assets
+└── src/
+    ├── components/
+    │   ├── board/
+    │   │   ├── ...Board initializer
+    │   │   └── ...Exposed functions to allow movement
+    │   ├── controls/
+    │   │   └── ...Event listeners for directions
+    │   └── ...Other parts of application, emphasis on parts
+    └── tools/
+        └── ...Side functionality tooling such as type checkers
+```
 
 ## About Development
 
